@@ -147,7 +147,7 @@ const help = `🧩 <b>Sub-Store 管理</b>
 
 class SubStorePlugin extends Plugin {
 
-  description = `Sub-Store 管理\n\n${help}`;
+  description = "Sub-Store 管理\n\n" + help;
 
   cmdHandlers: Record<string, (msg: Api.Message) => Promise<void>> = {
     sub: async (msg) => {
