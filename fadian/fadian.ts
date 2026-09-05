@@ -363,7 +363,7 @@ class FadianPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "fadian",
-    title: "发电",
+    title: "fadian",
     description: "粉丝发电配置",
     category: "插件配置",
     icon: "⚡",

@@ -129,7 +129,7 @@ class TracePlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "trace",
-    title: "网络追踪",
+    title: "trace",
     description: "网络路由追踪配置",
     category: "插件配置",
     icon: "🔍",

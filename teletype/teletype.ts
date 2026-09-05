@@ -295,7 +295,7 @@ class TeletypePlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "teletype",
-    title: "电传打字",
+    title: "teletype",
     description: "电传打字机配置",
     category: "插件配置",
     icon: "⌨️",

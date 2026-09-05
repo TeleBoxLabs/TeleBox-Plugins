@@ -2085,7 +2085,7 @@ class ShiftPlugin extends Plugin {
   // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "shift",
-      title: "排班",
+      title: "shift",
       description: "排班管理配置",
       category: "插件配置",
       icon: "📋",

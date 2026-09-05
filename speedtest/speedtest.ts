@@ -1514,7 +1514,7 @@ class SpeednextPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "speedtest",
-    title: "Speedtest 测速",
+    title: "speedtest",
     description: "网络测速配置",
     category: "插件配置",
     icon: "🚀",

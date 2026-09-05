@@ -1003,7 +1003,7 @@ class DeepWikiPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "deepwiki",
-    title: "DeepWiki",
+    title: "deepwiki",
     description: "DeepWiki 配置",
     category: "插件配置",
     icon: "📚",

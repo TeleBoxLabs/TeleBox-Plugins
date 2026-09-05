@@ -729,7 +729,7 @@ class ChannelSearchPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "search",
-    title: "频道搜索",
+    title: "search",
     description: "频道搜索配置：默认频道、广告过滤",
     category: "插件配置",
     icon: "🔍",

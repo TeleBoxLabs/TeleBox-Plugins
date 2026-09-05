@@ -1759,7 +1759,7 @@ class LotteryPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "lottery",
-    title: "抽奖",
+    title: "lottery",
     description: "抽奖配置",
     category: "插件配置",
     icon: "🎰",

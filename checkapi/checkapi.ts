@@ -394,7 +394,7 @@ cmdHandlers:Record<string,(msg:Api.Message)=>Promise<void>>={checkapi:async(msg)
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "checkapi",
-    title: "API 检查",
+    title: "checkapi",
     description: "已保存的 API Key 与默认 BaseURL 配置",
     category: "插件配置",
     icon: "🔑",

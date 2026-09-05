@@ -1677,7 +1677,7 @@ America/New_York
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
         id: "autochangename",
-        title: "自动改名",
+        title: "autochangename",
         description: "自动更改群名称配置",
         category: "插件配置",
         icon: "✏️",

@@ -1451,7 +1451,7 @@ class SayPlugin extends Plugin {
   // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "say",
-      title: "语音合成",
+      title: "say",
       description: "文本转语音 TTS 配置",
       category: "插件配置",
       icon: "🔊",

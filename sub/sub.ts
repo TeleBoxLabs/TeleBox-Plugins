@@ -557,7 +557,7 @@ echo "后端: http://\$IP:3001/\$SECRET"`;
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "sub",
-    title: "SubStore",
+    title: "sub",
     description: "SubStore 订阅管理配置",
     category: "插件配置",
     icon: "📦",

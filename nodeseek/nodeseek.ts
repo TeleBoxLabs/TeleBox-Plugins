@@ -345,7 +345,7 @@ class NodeSeekPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "nodeseek",
-    title: "NodeSeek 通知",
+    title: "nodeseek",
     description: "NodeSeek 论坛通知配置",
     category: "插件配置",
     icon: "📢",

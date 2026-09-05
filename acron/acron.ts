@@ -1297,7 +1297,7 @@ class AcronPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "acron",
-    title: "定时任务",
+    title: "acron",
     description: "ACRON 定时任务配置",
     category: "插件配置",
     icon: "⏰",

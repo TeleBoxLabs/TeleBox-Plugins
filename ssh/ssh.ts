@@ -1561,7 +1561,7 @@ ${keysContent}`;
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "ssh",
-    title: "SSH 管理",
+    title: "ssh",
     description: "SSH 服务配置",
     category: "插件配置",
     icon: "🔐",

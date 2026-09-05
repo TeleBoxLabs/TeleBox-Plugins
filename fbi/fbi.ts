@@ -666,7 +666,7 @@ class FbiPlugin extends Plugin {
   // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "fbi",
-      title: "FBI 跨群追踪",
+      title: "fbi",
       description: "跨群组消息追踪配置",
       category: "插件配置",
       icon: "🕵️",

@@ -409,7 +409,7 @@ class TTSPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "tts",
-    title: "TTS 语音合成",
+    title: "tts",
     description: "微软 Azure TTS 配置：Key、Region、语音、风格、语速",
     category: "插件配置",
     icon: "🗣️",

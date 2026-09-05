@@ -651,7 +651,7 @@ seconds, minutes, hours, date, times`;
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "sendat",
-    title: "定时发送",
+    title: "sendat",
     description: "定时消息发送配置",
     category: "插件配置",
     icon: "📅",

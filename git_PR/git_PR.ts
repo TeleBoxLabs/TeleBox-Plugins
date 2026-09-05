@@ -368,7 +368,7 @@ class GitManagerPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "git_PR",
-    title: "Git PR 管理",
+    title: "git_PR",
     description: "GitHub/GitLab PR 管理配置",
     category: "插件配置",
     icon: "🔀",

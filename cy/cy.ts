@@ -506,7 +506,7 @@ class CyPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "cy",
-    title: "词云定时",
+    title: "cy",
     description: "词云定时任务配置",
     category: "插件配置",
     icon: "☁️",

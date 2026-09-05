@@ -532,7 +532,7 @@ class ParseHubPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "parsehub",
-    title: "ParseHub 解析",
+    title: "parsehub",
     description: "链接解析插件状态：初始化状态、忽略消息 ID",
     category: "插件配置",
     icon: "🔗",

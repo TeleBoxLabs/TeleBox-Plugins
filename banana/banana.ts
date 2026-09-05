@@ -508,7 +508,7 @@ class BananaPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "banana",
-    title: "香蕉贴纸",
+    title: "banana",
     description: "香蕉贴纸 API 配置",
     category: "插件配置",
     icon: "🍌",

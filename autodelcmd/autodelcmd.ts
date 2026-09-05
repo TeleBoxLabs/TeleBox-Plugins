@@ -1171,7 +1171,7 @@ class AutoDeletePlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "autodelcmd",
-    title: "自动删除命令",
+    title: "autodelcmd",
     description: "自动删除命令消息配置",
     category: "插件配置",
     icon: "🗑️",

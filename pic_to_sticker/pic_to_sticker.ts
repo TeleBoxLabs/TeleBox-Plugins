@@ -584,7 +584,7 @@ class PicToStickerPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "pic_to_sticker",
-    title: "图片转贴纸",
+    title: "pic_to_sticker",
     description: "图片转贴纸配置",
     category: "插件配置",
     icon: "🖼️",

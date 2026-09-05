@@ -591,7 +591,7 @@ class ImageMonitorPlugin extends Plugin {
 // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "im",
-      title: "图片监控",
+      title: "im",
       description: "图片监控配置：启用、监控群组、默认操作",
       category: "插件配置",
       icon: "🖼️",

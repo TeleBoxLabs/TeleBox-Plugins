@@ -677,7 +677,7 @@ class PanguPlugin extends Plugin {
 // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "pangu",
-      title: "盘古格式",
+      title: "pangu",
       description: "消息格式化配置",
       category: "插件配置",
       icon: "🔄",

@@ -699,7 +699,7 @@ class CheckInPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "checkin",
-    title: "自动签到",
+    title: "checkin",
     description: "定时自动签到任务配置：运行时间、推送设置、签到目标管理",
     category: "插件配置",
     icon: "✅",

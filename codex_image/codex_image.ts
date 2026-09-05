@@ -489,7 +489,7 @@ class CodexImagePlugin extends Plugin {
 // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
       id: "codex_image",
-      title: "Codex 图片生成",
+      title: "codex_image",
       description: "OpenAI Codex (gpt-image-2) 图片生成配置",
       category: "插件配置",
       icon: "🎨",

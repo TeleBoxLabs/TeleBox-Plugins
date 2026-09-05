@@ -799,7 +799,7 @@ class NeZhaPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "nezha",
-    title: "哪吒监控",
+    title: "nezha",
     description: "服务器监控配置",
     category: "插件配置",
     icon: "📊",

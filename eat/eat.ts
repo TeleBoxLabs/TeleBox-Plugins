@@ -473,7 +473,7 @@ class EatPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "eat",
-    title: "吃表情",
+    title: "eat",
     description: "吃表情配置",
     category: "插件配置",
     icon: "😋",

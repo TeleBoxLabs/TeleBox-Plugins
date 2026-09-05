@@ -722,7 +722,7 @@ ${Object.entries(PROXY_HOSTS).map(([key, value]) =>
 // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
         id: "zpr",
-        title: "随机纸片人",
+        title: "zpr",
         description: "Lolicon API 图片获取：配置反代服务器",
         category: "插件配置",
         icon: "🎨",

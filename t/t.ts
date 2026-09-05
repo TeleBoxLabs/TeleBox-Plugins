@@ -425,7 +425,7 @@ class TTSPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "t",
-    title: "TTS 语音",
+    title: "t",
     description: "TTS 语音合成配置",
     category: "插件配置",
     icon: "🔊",

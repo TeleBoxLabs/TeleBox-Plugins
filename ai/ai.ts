@@ -5151,7 +5151,7 @@ class AIPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "ai",
-    title: "AI 对话",
+    title: "ai",
     description: "AI 对话配置：提供商、超时、折叠",
     category: "插件配置",
     icon: "🧠",

@@ -296,7 +296,7 @@ class GreetingPlugin extends Plugin {
 // Panel Settings Adapter
     panelAdapter: PanelSettingsAdapter = {
       id: "goodnight",
-      title: "晚安打卡",
+      title: "goodnight",
       description: "晚安/早安打卡配置",
       category: "插件配置",
       icon: "🌙",

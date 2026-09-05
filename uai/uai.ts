@@ -639,7 +639,7 @@ class UAIPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "uai",
-    title: "UAI 对话",
+    title: "uai",
     description: "UAI 对话配置：提供者、预设提示词、超时",
     category: "插件配置",
     icon: "🤖",

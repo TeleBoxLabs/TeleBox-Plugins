@@ -1033,7 +1033,7 @@ class SpeedlinkPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "speedlink",
-    title: "SpeedLink 服务器",
+    title: "speedlink",
     description: "SpeedLink 服务器连接配置",
     category: "插件配置",
     icon: "🔗",

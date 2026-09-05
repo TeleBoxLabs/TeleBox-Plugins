@@ -433,7 +433,7 @@ class EatGifPlugin extends Plugin {
 // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "eatgif",
-    title: "吃 GIF",
+    title: "eatgif",
     description: "吃 GIF 动图配置",
     category: "插件配置",
     icon: "🎬",

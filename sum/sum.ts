@@ -2116,7 +2116,7 @@ ${codeTag(db.data.aiConfig.default_prompt || DEFAULT_PROMPT)}`,
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "sum",
-    title: "AI 摘要",
+    title: "sum",
     description: "AI 长文本摘要配置",
     category: "插件配置",
     icon: "📝",

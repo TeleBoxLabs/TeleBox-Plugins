@@ -526,7 +526,7 @@ class GifStickerPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "gif",
-    title: "GIF 转换",
+    title: "gif",
     description: "视频/GIF 转贴纸配置",
     category: "插件配置",
     icon: "🎞️",

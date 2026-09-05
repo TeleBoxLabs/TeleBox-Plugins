@@ -995,7 +995,7 @@ class TmpAdminPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "tmp_admin",
-    title: "临时管理",
+    title: "tmp_admin",
     description: "临时管理员配置",
     category: "插件配置",
     icon: "🛡️",

@@ -659,7 +659,7 @@ class WhoisPlugin extends Plugin {
   // Panel Settings Adapter
   panelAdapter: PanelSettingsAdapter = {
     id: "whois",
-    title: "Whois 查询",
+    title: "whois",
     description: "域名 Whois 查询配置",
     category: "插件配置",
     icon: "🔎",
