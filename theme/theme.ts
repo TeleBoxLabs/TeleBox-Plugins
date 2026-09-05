@@ -3424,7 +3424,7 @@ class ThemePlugin extends Plugin {
         await msg.edit({ text: html`⏳ 解析中…`, parseMode: "html" });
       } catch (editErr: any) {
         const errName = editErr?.errorMessage || editErr?.message || "";
-        if (/AUTH_REQUIRED|CHAT_ADMIN_REQUIRED|MESSAGE_ID_INVALID|MESSAGE_AUTHOR_REQUIRED/i.test(errName)) return;
+        if (/AUTH_REQUIRED|CHAT_ADMIN_REQUIRED|MESSAGE_ID_INVALID|MESSAGE_AUTHOR_REQUIRED|author required/i.test(errName)) return;
         throw editErr;
       }
       const client = await getGlobalClient();
@@ -3471,7 +3471,7 @@ class ThemePlugin extends Plugin {
       // 守卫误判（共享收藏/频道帖等）导致后续 msg.edit() 抛 MESSAGE_AUTHOR_REQUIRED，
       // 属预期情况，静默跳过，避免反复刷 ERROR 日志
       const errName = e?.errorMessage || e?.message || "";
-      if (/MESSAGE_AUTHOR_REQUIRED|AUTH_REQUIRED|CHAT_ADMIN_REQUIRED/i.test(errName)) return;
+      if (/MESSAGE_AUTHOR_REQUIRED|AUTH_REQUIRED|CHAT_ADMIN_REQUIRED|author required/i.test(errName)) return;
       console.error("[theme] listen:", e);
     }
   };
