@@ -1,0 +1,74 @@
+name: Sync from TeleBoxOrg
+
+on:
+  # 仅手动 / 上游 notify 触发；不再定时每 6 小时同步
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync-upstream]
+
+concurrency:
+  group: sync-upstream-${{ github.repository }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # PAT needs repo + workflow so we can push .github/workflows/*
+          token: ${{ secrets.TELEBOXLABS_SYNC_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "TeleBox Sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Mirror TeleBoxOrg/main (keep Labs sync workflow)
+        env:
+          UPSTREAM_OWNER: TeleBoxOrg
+          UPSTREAM_REPO: ${{ github.event.repository.name }}
+        run: |
+          set -euo pipefail
+          WF_PATH=".github/workflows/sync-upstream.yml"
+          NOTIFY_PATH=".github/workflows/notify-teleboxlabs-sync.yml"
+          mkdir -p /tmp/telebox-sync
+          cp "$WF_PATH" /tmp/telebox-sync/sync-upstream.yml
+
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream "https://github.com/${UPSTREAM_OWNER}/${UPSTREAM_REPO}.git"
+          git fetch upstream main
+          git checkout main
+
+          BEFORE=$(git rev-parse HEAD)
+          UPSTREAM=$(git rev-parse upstream/main)
+          echo "fork HEAD:     $BEFORE"
+          echo "upstream main: $UPSTREAM"
+
+          git reset --hard upstream/main
+
+          # TeleBoxOrg-only: do not run notify-on-push on the fork
+          rm -f "$NOTIFY_PATH"
+
+          # Keep this manual/dispatch mirror workflow
+          mkdir -p .github/workflows
+          cp /tmp/telebox-sync/sync-upstream.yml "$WF_PATH"
+
+          if ! git diff --quiet --exit-code || [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "推送更新"
+          fi
+
+          AFTER=$(git rev-parse HEAD)
+          if [ "$BEFORE" = "$AFTER" ]; then
+            echo "✅ Already mirrored"
+            exit 0
+          fi
+
+          git push --force-with-lease origin main
+          echo "✅ Mirrored origin/main → $(git rev-parse --short HEAD) (upstream $(git rev-parse --short upstream/main) + Labs workflow)"
