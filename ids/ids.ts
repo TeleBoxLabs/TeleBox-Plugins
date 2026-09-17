@@ -118,9 +118,26 @@ class IdsPlugin extends Plugin {
     return `${d.getFullYear()}年${d.getMonth() + 1}月`;
   }
 
+  // Telegram 的收藏/NFT 用户名存放在 `usernames` 列表中，而不一定会同步到
+  // 旧的 `username` 字段。只使用启用中的用户名，避免生成无法打开的链接。
+  private getUsernames(user: any): string[] {
+    const usernames = new Set<string>();
+    if (typeof user?.username === "string" && user.username) usernames.add(user.username);
+    for (const entry of user?.usernames || []) {
+      if (typeof entry?.username === "string" && entry.username && entry.active !== false) {
+        usernames.add(entry.username);
+      }
+    }
+    return [...usernames];
+  }
+
   private async getUserInfo(client: any, user: any, userId: number, msg: Api.Message): Promise<any> {
+    if (!user) {
+      try { user = await client.getEntity(userId); } catch {}
+    }
+    const usernames = this.getUsernames(user);
     const info: any = {
-      id: userId, user, username: user?.username || null,
+      id: userId, user, usernames, username: usernames[0] || null,
       firstName: user?.firstName || user?.first_name || null,
       lastName: user?.lastName || user?.last_name || null,
       isBot: user?.bot || false, isVerified: user?.verified || false,
@@ -134,6 +151,19 @@ class IdsPlugin extends Plugin {
       if (full.fullUser) {
         info.bio = full.fullUser.about || null;
         info.commonChats = full.fullUser.commonChatsCount || 0;
+      }
+      const fullUser = full.users?.find((candidate: any) => Number(candidate.id) === userId) || full.users?.[0];
+      if (fullUser) {
+        info.user = fullUser;
+        info.usernames = this.getUsernames(fullUser);
+        info.username = info.usernames[0] || null;
+        info.firstName = fullUser.firstName || fullUser.first_name || info.firstName;
+        info.lastName = fullUser.lastName || fullUser.last_name || info.lastName;
+        info.isBot = fullUser.bot || false;
+        info.isVerified = fullUser.verified || false;
+        info.isPremium = fullUser.premium || false;
+        info.isScam = fullUser.scam || false;
+        info.isFake = fullUser.fake || false;
       }
     } catch {}
 
@@ -163,7 +193,7 @@ class IdsPlugin extends Plugin {
   private formatUserInfo(info: any): string {
     const userId = info.id;
     let displayName = info.firstName ? `${info.firstName}${info.lastName ? ' ' + info.lastName : ''}` : (info.username ? `@${info.username}` : `用户 ${userId}`);
-    let usernameInfo = info.username ? `@${info.username}` : "无用户名";
+    const usernameInfo = info.usernames?.length ? info.usernames.map((username: string) => `@${username}`).join("、") : "无用户名";
 
     const statusTags = [];
     if (info.isBot) statusTags.push("🤖 机器人");
@@ -198,8 +228,16 @@ class IdsPlugin extends Plugin {
 
   private async parseTarget(client: any, target: string) {
     if (target.startsWith("@")) {
-      const e = await client.getEntity(target);
-      return { user: e, id: Number(e.id) };
+      try {
+        const e = await client.getEntity(target);
+        return { user: e, id: Number(e.id) };
+      } catch {
+        // 对收藏/NFT 用户名直接调用 Telegram 的用户名解析接口作为回退。
+        const resolved = await client.invoke(new Api.contacts.ResolveUsername({ username: target.slice(1) }));
+        const e = resolved.users?.[0];
+        if (!e) throw new Error("未找到该用户名对应的用户");
+        return { user: e, id: Number(e.id) };
+      }
     }
     const id = parseInt(target);
     if (!isNaN(id)) {

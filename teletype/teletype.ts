@@ -243,7 +243,7 @@ class TeletypePlugin extends Plugin {
         }
         
       } catch (error: any) {
-        if (!error.message?.includes("MESSAGE_NOT_MODIFIED")) {
+        if (!this.isMessageNotModified(error)) {
           throw error;
         }
         continue;
@@ -252,25 +252,15 @@ class TeletypePlugin extends Plugin {
       await this.sleep(interval);
     }
     
-    const finalText = htmlEscape(text);
-    try {
-      if (currentMsg) {
-        await currentMsg.edit({
-          text: finalText,
-          parseMode: "html"
-        });
-      }
-    } catch (error: any) {
-      if (!error.message?.includes("MESSAGE_NOT_MODIFIED")) {
-        throw error;
-      }
-    }
+    // The final loop iteration has already removed the cursor and written the
+    // completed text. Editing it again produces Telegram's MESSAGE_NOT_MODIFIED
+    // response, which is not an actual failure.
   }
   
   private async handleError(msg: Api.Message, error: any): Promise<void> {
     console.error(`[${this.PLUGIN_NAME}] Error:`, error);
     
-    if (error.message?.includes("MESSAGE_NOT_MODIFIED")) {
+    if (this.isMessageNotModified(error)) {
       return;
     }
     
@@ -290,6 +280,13 @@ class TeletypePlugin extends Plugin {
   
   private sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private isMessageNotModified(error: any): boolean {
+    const message = String(error?.message ?? error).toLowerCase();
+    return message.includes("message_not_modified") ||
+      message.includes("message wasn't modified") ||
+      message.includes("message was not modified");
   }
 
   // Panel Settings Adapter
