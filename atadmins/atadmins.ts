@@ -141,16 +141,16 @@ class AtAdminsPlugin extends Plugin {
           }
           
           adminCount++;
-          if (user.username) {
-            admins.push(`@${user.username}`);
-          } else {
-            const firstName = user.firstName || "";
-            const lastName = user.lastName || "";
-            const fullName = `${firstName} ${lastName}`.trim() || "用户";
-            // HTML转义用户名
-            const escapedName = htmlEscape(fullName);
-            admins.push(`[${escapedName}](tg://user?id=${user.id})`);
-          }
+          const firstName = user.firstName || "";
+          const lastName = user.lastName || "";
+          const fullName = `${firstName} ${lastName}`.trim() || user.username || "用户";
+          const escapedName = htmlEscape(fullName);
+
+          // Always mention the participant by numeric ID. A collectible/NFT
+          // username may not be exposed as `user.username`, and a plain
+          // @username cannot reliably notify it. Telegram text mentions work
+          // independently of a username as long as the user is in the group.
+          admins.push(`<a href="tg://user?id=${user.id}">${escapedName}</a>`);
         }
       }
 
@@ -169,8 +169,8 @@ class AtAdminsPlugin extends Plugin {
       const header = `${say}：\n\n`;
       const chunks = this.chunkMentions(admins, header);
 
-      // 逐条发送（显式使用 Markdown 解析 tg://user?id= 链接）
-      const baseSendOptions: any = { parseMode: "markdown" };
+      // 逐条发送。HTML text mention 可按用户 ID 艾特，包括 NFT/收藏用户名。
+      const baseSendOptions: any = { parseMode: "html" };
       if (msg.replyToMsgId) baseSendOptions.replyTo = msg.replyToMsgId;
 
       for (const part of chunks) {

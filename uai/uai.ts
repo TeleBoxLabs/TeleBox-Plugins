@@ -218,8 +218,11 @@ async function collectMessages(
     // 构建迭代器参数
     const iterParams: any = { limit: maxCount };
 
-    // 如果需要按用户过滤，使用 fromUser 参数（直接让 API 过滤，避免 flood wait）
-    if (filterSenderId) {
+    // `fromUser` works for groups/channels, but Telegram does not reliably
+    // support that server-side filter for a one-to-one dialog. In a private
+    // chat, iterate the dialog and filter by sender locally instead.
+    const isPrivateChat = Boolean(chatPeerId?.userId);
+    if (filterSenderId && !isPrivateChat) {
         try {
             // 尝试获取用户实体
             const userEntity = await client.getEntity(filterSenderId);
@@ -232,9 +235,16 @@ async function collectMessages(
         }
     }
 
-    const messageIterator = client.iterMessages(chatPeerId, iterParams);
     const normalizedFilterId = filterSenderId ? normalizeId(filterSenderId) : null;
-    const needManualFilter = filterSenderId && !iterParams.fromUser;
+    const needManualFilter = Boolean(filterSenderId && !iterParams.fromUser);
+
+    // A count limit must account for messages sent by the other participant
+    // when filtering locally in a private dialog.
+    if (needManualFilter && limit.type === "count") {
+        iterParams.limit = Math.min(maxCount * 20, 3000);
+    }
+
+    const messageIterator = client.iterMessages(chatPeerId, iterParams);
 
     for await (const msg of messageIterator) {
         const m = msg as any;
