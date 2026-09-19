@@ -150,6 +150,13 @@ class StickerPlugin extends Plugin {
     sticker: async (msg: Api.Message) => await this.handleSticker(msg),
   };
 
+  private getUsername(user: Api.User): string {
+    // NFT 用户名位于 usernames 中，不一定会填充主 username 字段。
+    return user.username?.trim()
+      || user.usernames?.find(entry => entry.active && entry.username?.trim())?.username.trim()
+      || "";
+  }
+
   private async handleSticker(msg: Api.Message): Promise<void> {
     const client = await getGlobalClient();
     if (!client) {
@@ -220,7 +227,8 @@ class StickerPlugin extends Plugin {
       if (!(me instanceof Api.User)) {
           throw new StickerError("无法获取您的用户信息。");
       }
-      if (!me.username && !targetPackName) {
+      const username = this.getUsername(me);
+      if (!username && !targetPackName) {
         throw new StickerError(
           "您没有设置用户名，无法自动创建贴纸包。\n" +
           `请使用 <code>${htmlEscape(mainPrefix)}sticker &lt;您的贴纸包名&gt;</code> 设置一个默认包。`
@@ -232,7 +240,7 @@ class StickerPlugin extends Plugin {
       const { packName, shouldCreate } = await this.findOrCreatePack(
         client,
         targetPackName,
-        me.username || "user",
+        username || "user",
         stickerInfo
       );
 
@@ -300,8 +308,9 @@ class StickerPlugin extends Plugin {
       } else {
         const me = await safeGetMe(client);
            if (!me) return;
-        if (me instanceof Api.User && me.username) {
-            text += `未设置默认贴纸包，将自动使用 <code>${htmlEscape(me.username)}_...</code> 系列包。`;
+        const username = me instanceof Api.User ? this.getUsername(me) : "";
+        if (username) {
+            text += `未设置默认贴纸包，将自动使用 <code>${htmlEscape(username)}_...</code> 系列包。`;
         } else {
             text += `未设置默认贴纸包，且您没有用户名，收藏前必须先设置一个默认包。`;
         }
@@ -403,7 +412,8 @@ class StickerPlugin extends Plugin {
     packName: string,
     stickerInfo: { isAnimated: boolean; isVideo: boolean; isStatic: boolean; emoji: string, document: Api.InputDocument }
   ): Promise<void> {
-    let title = `@${me.username} 的收藏`;
+    const username = this.getUsername(me);
+    let title = `${username ? `@${username}` : me.firstName || "我的"} 的收藏`;
     if (stickerInfo.isAnimated) title += " (动态)";
     else if (stickerInfo.isVideo) title += " (视频)";
     else if (stickerInfo.isStatic) title += " (静态)";
