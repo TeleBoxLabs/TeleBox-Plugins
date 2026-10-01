@@ -829,10 +829,9 @@ class PrometheusPlugin extends Plugin {
           source: { chatId: sourceChatId, messageId: sourceMessageId }
         };
       } catch (forwardError: any) {
-        const errorMsg = forwardError.message || '';
-        const isRestricted = errorMsg.includes('SAVE') || 
-                           errorMsg.includes('FORWARD') || 
-                           errorMsg.includes('CHAT_FORWARDS_RESTRICTED');
+        // teleproto 的 RPC 错误名在 errorMessage（如 CHAT_FORWARDS_RESTRICTED），message 是人类可读描述
+        const errorName: string = forwardError?.errorMessage || forwardError?.message || '';
+        const isRestricted = /CHAT_FORWARDS_RESTRICTED|FORWARD|SAVE/.test(errorName);
         
         if (!isRestricted) throw forwardError;
         

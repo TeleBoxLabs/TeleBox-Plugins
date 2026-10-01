@@ -574,18 +574,21 @@ class CheckInPlugin extends Plugin {
       new Api.messages.GetBotCallbackAnswer({
         peer,
         msgId: msg.id,
-        data: btn.data || Buffer.from(target.callbackData || "", "utf-8"),
+        data: btn.data,
       })
     );
   }
 
-  private findCallbackButton(msg: Api.Message, target: SignTarget): any | null {
-    const rows = (msg as any).replyMarkup?.rows || [];
-    for (const row of rows) {
-      for (const b of row.buttons || []) {
-        const d = this.decodeData(b.data);
-        if (target.callbackData && d === target.callbackData) return b;
-        if (!target.callbackData && target.buttonText && b.text === target.buttonText) return b;
+  /** layer 229：回调数据在 KeyboardInlineButton.type（InlineButtonTypeCallback）上，按钮本身没有 data */
+  private findCallbackButton(msg: Api.Message, target: SignTarget): { text: string; data: Buffer } | null {
+    const markup = msg.replyMarkup;
+    if (!(markup instanceof Api.ReplyInlineMarkup)) return null;
+    for (const row of markup.rows) {
+      for (const b of row.buttons) {
+        if (!(b.type instanceof Api.InlineButtonTypeCallback)) continue;
+        const btn = { text: b.text, data: b.type.data };
+        if (target.callbackData && this.decodeData(btn.data) === target.callbackData) return btn;
+        if (!target.callbackData && target.buttonText && btn.text === target.buttonText) return btn;
       }
     }
     return null;
